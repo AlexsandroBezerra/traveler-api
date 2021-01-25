@@ -5,14 +5,19 @@
   "description": "A rest API for Traveler application",
   "license": "MIT",
   "author": "Alexsandro G Bezerra",
-  "main": "dist/server.js",
+  "main": "dist/infra/server.js",
   "scripts": {
     "build": "babel src --extensions \".ts\" --out-dir dist --copy-files --no-copy-ignored",
-    "dev": "tsnd --inspect --respawn --transpile-only --ignore-watch node_modules src/server.ts",
-    "start": "node dist/server.js"
+    "dev": "tsnd --inspect --respawn --transpile-only --ignore-watch node_modules src/infra/server.ts",
+    "start": "node dist/infra/server.js",
+    "typeorm": "tsnd -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "pg": "^8.5.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.30"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
