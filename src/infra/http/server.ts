@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import express from 'express'
 
-import './database/connection'
+import '../database/connection'
 import routes from './routes'
 
 const PORT = process.env.PORT || 3333

@@ -5,11 +5,11 @@
   "description": "A rest API for Traveler application",
   "license": "MIT",
   "author": "Alexsandro G Bezerra",
-  "main": "dist/infra/server.js",
+  "main": "dist/infra/http/server.js",
   "scripts": {
     "build": "babel src --extensions \".ts\" --out-dir dist --copy-files --no-copy-ignored",
-    "dev": "tsnd --inspect --respawn --transpile-only --ignore-watch node_modules src/infra/server.ts",
-    "start": "node dist/infra/server.js",
+    "dev": "tsnd --inspect --respawn --transpile-only --ignore-watch node_modules src/infra/http/server.ts",
+    "start": "node dist/infra/http/server.js",
     "typeorm": "tsnd -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
