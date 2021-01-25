@@ -1,9 +1,18 @@
 {
   "name": "traveler-api",
   "version": "1.0.0",
+  "private": true,
   "description": "A rest API for Traveler application",
-  "main": "index.js",
-  "author": "Alexsandro G Bezerra",
   "license": "MIT",
-  "private": true
+  "author": "Alexsandro G Bezerra",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsnd --inspect --respawn --transpile-only --ignore-watch node_modules src/server.ts",
+    "start": "node dist/server.js"
+  },
+  "devDependencies": {
+    "ts-node-dev": "^1.1.1",
+    "typescript": "^4.1.3"
+  }
 }
