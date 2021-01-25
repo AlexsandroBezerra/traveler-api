@@ -1,0 +1,9 @@
+{
+  "name": "traveler-api",
+  "version": "1.0.0",
+  "description": "A rest API for Traveler application",
+  "main": "index.js",
+  "author": "Alexsandro G Bezerra",
+  "license": "MIT",
+  "private": true
+}
