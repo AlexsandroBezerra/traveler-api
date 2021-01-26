@@ -22,6 +22,21 @@ services:
     links:
       - traveler-postgres
 
+  traveler-postgres-migrations:
+    build: .
+    container_name: traveler-postgres-migrations
+    command: yarn typeorm migration:run
+    depends_on:
+      - traveler-postgres
+    environment:
+      - POSTGRES_HOST=traveler-postgres
+    volumes:
+      - .:/home/node/api
+    networks:
+      - traveler-network
+    links:
+      - traveler-postgres
+
   traveler-postgres:
     image: bitnami/postgresql:latest
     container_name: traveler-postgres
