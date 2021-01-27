@@ -7,7 +7,7 @@ const devConfig = {
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB_NAME,
-  entities: ['./src/**/infra/database/entities/*.ts'],
+  entities: ['./src/**/infra/entities/*.ts'],
   migrations: ['./src/infra/database/migrations/*.ts'],
   cli: {
     migrationsDir: './src/infra/database/migrations'
