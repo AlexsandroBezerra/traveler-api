@@ -1,4 +1,5 @@
 import { getRepository } from 'typeorm'
+import AppError from '../errors/AppError'
 
 import City from '../infra/entities/City'
 
@@ -23,7 +24,11 @@ class CreateCityService {
     })
 
     if (alreadyExists) {
-      throw new Error('City is already booked')
+      throw new AppError(
+        'CONFLICT',
+        'The city provided is already created',
+        409
+      )
     }
 
     const city = citiesRepository.create({
