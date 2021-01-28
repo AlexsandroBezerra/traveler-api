@@ -1,10 +1,12 @@
 import { Router } from 'express'
+import SonicSearchProvider from '../../../providers/SearchProvider/implementations/SonicSearchProvider'
 
 import CreateCityService from '../../../services/CreateCityService'
 import ListCitiesService from '../../../services/ListCitiesService'
 import ShowCityService from '../../../services/ShowCityService'
 
 const citiesRouter = Router()
+const searchProvider = new SonicSearchProvider()
 
 citiesRouter.get('/', async (request, response) => {
   const listCities = new ListCitiesService()
@@ -27,7 +29,7 @@ citiesRouter.get('/:id', async (request, response) => {
 citiesRouter.post('/', async (request, response) => {
   const { name, description, famousFor, image } = request.body
 
-  const createCity = new CreateCityService()
+  const createCity = new CreateCityService(searchProvider)
 
   const city = await createCity.execute({
     name,

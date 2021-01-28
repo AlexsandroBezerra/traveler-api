@@ -6,3 +6,6 @@ dist
 
 # Enviroment variables
 .env
+
+# Searcher data
+sonic/store

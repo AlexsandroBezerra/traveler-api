@@ -11,6 +11,7 @@ services:
     command: yarn dev
     depends_on:
       - traveler-postgres
+      - traveler-searcher
     environment:
       - POSTGRES_HOST=traveler-postgres
     volumes:
@@ -21,6 +22,7 @@ services:
       - traveler-network
     links:
       - traveler-postgres
+      - traveler-searcher
 
   traveler-postgres-migrations:
     build: .
@@ -49,3 +51,13 @@ services:
       - "5432:5432"
     networks:
       - traveler-network
+
+  traveler-searcher:
+    image: valeriansaliou/sonic:v1.3.0
+    volumes:
+      - ./sonic/config.cfg:/etc/sonic.cfg
+      - ./sonic/store/:/var/lib/sonic/store/
+    networks:
+      - traveler-network
+    environment:
+      - SECRET=${SONIC_PASSWORD}

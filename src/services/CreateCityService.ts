@@ -2,6 +2,7 @@ import { getRepository } from 'typeorm'
 import AppError from '../errors/AppError'
 
 import City from '../infra/database/entities/City'
+import ISearchProvider from '../providers/SearchProvider/models/ISearchProvider'
 
 interface IRequest {
   name: string
@@ -11,6 +12,8 @@ interface IRequest {
 }
 
 class CreateCityService {
+  constructor(private searchProvider: ISearchProvider) {}
+
   public async execute({
     name,
     description,
@@ -39,6 +42,12 @@ class CreateCityService {
     })
 
     await citiesRepository.save(city)
+
+    await this.searchProvider.save({
+      collection: 'cities',
+      result: `cities:${city.id}`,
+      searchable: `${city.name} ${city.description} ${city.famousFor}`
+    })
 
     return city
   }
