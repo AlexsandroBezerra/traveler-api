@@ -1,9 +1,9 @@
-import { getRepository } from 'typeorm'
 import { inject, injectable } from 'tsyringe'
 
 import AppError from '../errors/AppError'
 import City from '../infra/database/entities/City'
 import ISearchProvider from '../container/providers/SearchProvider/models/ISearchProvider'
+import ICitiesRepository from '../repositories/ICitiesRepository'
 
 interface IRequest {
   name: string
@@ -15,6 +15,9 @@ interface IRequest {
 @injectable()
 class CreateCityService {
   constructor(
+    @inject('CitiesRepository')
+    private citiesRepository: ICitiesRepository,
+
     @inject('SearchProvider')
     private searchProvider: ISearchProvider
   ) {}
@@ -25,11 +28,7 @@ class CreateCityService {
     famousFor,
     image
   }: IRequest): Promise<City> {
-    const citiesRepository = getRepository(City)
-
-    const alreadyExists = await citiesRepository.findOne({
-      where: { name }
-    })
+    const alreadyExists = await this.citiesRepository.findByName(name)
 
     if (alreadyExists) {
       throw new AppError(
@@ -39,14 +38,12 @@ class CreateCityService {
       )
     }
 
-    const city = citiesRepository.create({
+    const city = await this.citiesRepository.create({
       name,
       description,
       famousFor,
       image
     })
-
-    await citiesRepository.save(city)
 
     await this.searchProvider.save({
       collection: 'cities',

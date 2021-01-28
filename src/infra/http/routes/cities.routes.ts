@@ -9,7 +9,7 @@ import ShowCityService from '../../../services/ShowCityService'
 const citiesRouter = Router()
 
 citiesRouter.get('/', async (request, response) => {
-  const listCities = new ListCitiesService()
+  const listCities = container.resolve(ListCitiesService)
 
   const cities = await listCities.execute()
 
@@ -29,7 +29,7 @@ citiesRouter.get('/search', async (request, response) => {
 citiesRouter.get('/:id', async (request, response) => {
   const { id } = request.params
 
-  const showCity = new ShowCityService()
+  const showCity = container.resolve(ShowCityService)
 
   const cities = await showCity.execute(id)
 

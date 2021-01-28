@@ -1,8 +1,8 @@
-import { getRepository } from 'typeorm'
+import { inject, injectable } from 'tsyringe'
 
 import City from '../infra/database/entities/City'
 import ISearchProvider from '../container/providers/SearchProvider/models/ISearchProvider'
-import { inject, injectable } from 'tsyringe'
+import ICitiesRepository from '../repositories/ICitiesRepository'
 
 interface IRequest {
   query: string
@@ -11,6 +11,9 @@ interface IRequest {
 @injectable()
 class SearchCityService {
   constructor(
+    @inject('CitiesRepository')
+    private citiesRepository: ICitiesRepository,
+
     @inject('SearchProvider')
     private searchProvider: ISearchProvider
   ) {}
@@ -21,15 +24,15 @@ class SearchCityService {
       terms: query
     })
 
-    if (!results) {
-      return []
-    }
+    if (!results) return []
 
-    const cityIds = results.map(result => result.split(':')[1])
+    const cityIds = results.map(result => {
+      const [, id] = result.split(':')
 
-    const citiesRepository = getRepository(City)
+      return id
+    })
 
-    const cities = await citiesRepository.findByIds(cityIds)
+    const cities = await this.citiesRepository.findByIds(cityIds)
 
     return cities
   }

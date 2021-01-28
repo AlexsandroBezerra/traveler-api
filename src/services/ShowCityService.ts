@@ -1,18 +1,23 @@
-import { getRepository } from 'typeorm'
+import { inject, injectable } from 'tsyringe'
 import { validate as isUuid } from 'uuid'
 
 import City from '../infra/database/entities/City'
 import AppError from '../errors/AppError'
+import ICitiesRepository from '../repositories/ICitiesRepository'
 
+@injectable()
 class ShowCityService {
-  public async execute(id: string): Promise<City> {
-    const citiesRepository = getRepository(City)
+  constructor(
+    @inject('CitiesRepository')
+    private citiesRepository: ICitiesRepository
+  ) {}
 
+  public async execute(id: string): Promise<City> {
     if (!isUuid(id)) {
       throw new AppError('BAD_REQUEST', 'The id provided is invalid')
     }
 
-    const city = await citiesRepository.findOne(id)
+    const city = await this.citiesRepository.findById(id)
 
     if (!city) {
       throw new AppError('NOT_FOUND', 'City not found', 404)
