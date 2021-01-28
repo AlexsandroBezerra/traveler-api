@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm'
-import City from '../infra/entities/City'
+import City from '../infra/database/entities/City'
 
 class ListCitiesService {
   public async execute(): Promise<City[]> {

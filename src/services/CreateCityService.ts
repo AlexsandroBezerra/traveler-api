@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm'
 import AppError from '../errors/AppError'
 
-import City from '../infra/entities/City'
+import City from '../infra/database/entities/City'
 
 interface IRequest {
   name: string
