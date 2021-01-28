@@ -1,14 +1,19 @@
 import { getRepository } from 'typeorm'
 
 import City from '../infra/database/entities/City'
-import ISearchProvider from '../providers/SearchProvider/models/ISearchProvider'
+import ISearchProvider from '../container/providers/SearchProvider/models/ISearchProvider'
+import { inject, injectable } from 'tsyringe'
 
 interface IRequest {
   query: string
 }
 
+@injectable()
 class SearchCityService {
-  constructor(private searchProvider: ISearchProvider) {}
+  constructor(
+    @inject('SearchProvider')
+    private searchProvider: ISearchProvider
+  ) {}
 
   public async execute({ query }: IRequest): Promise<City[]> {
     const results = await this.searchProvider.query({

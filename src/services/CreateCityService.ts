@@ -1,8 +1,9 @@
 import { getRepository } from 'typeorm'
-import AppError from '../errors/AppError'
+import { inject, injectable } from 'tsyringe'
 
+import AppError from '../errors/AppError'
 import City from '../infra/database/entities/City'
-import ISearchProvider from '../providers/SearchProvider/models/ISearchProvider'
+import ISearchProvider from '../container/providers/SearchProvider/models/ISearchProvider'
 
 interface IRequest {
   name: string
@@ -11,8 +12,12 @@ interface IRequest {
   famousFor: string
 }
 
+@injectable()
 class CreateCityService {
-  constructor(private searchProvider: ISearchProvider) {}
+  constructor(
+    @inject('SearchProvider')
+    private searchProvider: ISearchProvider
+  ) {}
 
   public async execute({
     name,

@@ -1,10 +1,13 @@
+import '../database/connection'
+
 import 'dotenv/config'
+import 'reflect-metadata'
 import express from 'express'
 import 'express-async-errors'
 
-import '../database/connection'
 import errorHandler from '../../errors/handler'
 import routes from './routes'
+import '../../container'
 
 const PORT = process.env.PORT || 3333
 const app = express()
