@@ -3,6 +3,7 @@ import SonicSearchProvider from '../../../providers/SearchProvider/implementatio
 
 import CreateCityService from '../../../services/CreateCityService'
 import ListCitiesService from '../../../services/ListCitiesService'
+import SearchCityService from '../../../services/SearchCityService'
 import ShowCityService from '../../../services/ShowCityService'
 
 const citiesRouter = Router()
@@ -12,6 +13,16 @@ citiesRouter.get('/', async (request, response) => {
   const listCities = new ListCitiesService()
 
   const cities = await listCities.execute()
+
+  return response.json(cities)
+})
+
+citiesRouter.get('/search', async (request, response) => {
+  const { q: query } = request.query as { [key: string]: string }
+
+  const searchCity = new SearchCityService(searchProvider)
+
+  const cities = await searchCity.execute({ query })
 
   return response.json(cities)
 })
