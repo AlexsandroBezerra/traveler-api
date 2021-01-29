@@ -8,7 +8,7 @@
   "main": "dist/infra/http/server.js",
   "scripts": {
     "build": "babel src --extensions \".ts\" --out-dir dist --copy-files --no-copy-ignored",
-    "dev": "tsnd --inspect -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules src/infra/http/server.ts",
+    "dev": "tsnd -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules src/infra/http/server.ts",
     "start": "node dist/infra/http/server.js",
     "typeorm": "tsnd ./node_modules/typeorm/cli.js"
   },
