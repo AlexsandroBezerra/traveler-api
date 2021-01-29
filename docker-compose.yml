@@ -7,6 +7,7 @@ networks:
 services:
   traveler-api:
     build: .
+    image: traveler-api
     container_name: traveler-api
     command: yarn dev
     depends_on:
@@ -25,14 +26,13 @@ services:
 
   traveler-postgres-migrations:
     build: .
+    image: traveler-api
     container_name: traveler-postgres-migrations
     command: yarn typeorm migration:run
     depends_on:
       - traveler-postgres
     environment:
       POSTGRES_HOST: traveler-postgres
-    volumes:
-      - .:/home/node/api
     networks:
       - traveler-network
 
@@ -43,6 +43,8 @@ services:
       POSTGRESQL_USERNAME: ${POSTGRES_USER}
       POSTGRESQL_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRESQL_DATABASE: ${POSTGRES_DB_NAME}
+    volumes:
+      - ./tmp/postgres:/bitnami/postgresql
     ports:
       - "5432:5432"
     networks:
@@ -54,7 +56,7 @@ services:
     environment:
       SECRET: ${SONIC_PASSWORD}
     volumes:
-      - ./sonic/config.cfg:/etc/sonic.cfg
-      - ./sonic/store/:/var/lib/sonic/store/
+      - ./sonic-config.cfg:/etc/sonic.cfg
+      - ./tmp/sonic/store:/var/lib/sonic/store/
     networks:
       - traveler-network
