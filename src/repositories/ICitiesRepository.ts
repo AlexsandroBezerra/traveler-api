@@ -1,6 +1,6 @@
-import City from '../infra/database/entities/City'
+import City from '@infra/database/entities/City'
 
-import ICreateCityDTO from '../dtos/ICreateCityDTO'
+import ICreateCityDTO from '@dtos/ICreateCityDTO'
 
 interface ICitiesRepository {
   all(): Promise<City[]>

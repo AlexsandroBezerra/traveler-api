@@ -1,9 +1,9 @@
 import { inject, injectable } from 'tsyringe'
 import { validate as isUuid } from 'uuid'
 
-import City from '../infra/database/entities/City'
-import AppError from '../errors/AppError'
-import ICitiesRepository from '../repositories/ICitiesRepository'
+import AppError from '@errors/AppError'
+import City from '@infra/database/entities/City'
+import ICitiesRepository from '@repositories/ICitiesRepository'
 
 @injectable()
 class ShowCityService {

@@ -1,8 +1,8 @@
 import { inject, injectable } from 'tsyringe'
 
-import City from '../infra/database/entities/City'
-import ISearchProvider from '../container/providers/SearchProvider/models/ISearchProvider'
-import ICitiesRepository from '../repositories/ICitiesRepository'
+import City from '@infra/database/entities/City'
+import ICitiesRepository from '@repositories/ICitiesRepository'
+import ISearchProvider from '@providers/SearchProvider/models/ISearchProvider'
 
 interface IRequest {
   query: string

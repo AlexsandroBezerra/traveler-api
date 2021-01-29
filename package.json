@@ -8,7 +8,7 @@
   "main": "dist/infra/http/server.js",
   "scripts": {
     "build": "babel src --extensions \".ts\" --out-dir dist --copy-files --no-copy-ignored",
-    "dev": "tsnd --inspect --respawn --transpile-only --ignore-watch node_modules src/infra/http/server.ts",
+    "dev": "tsnd --inspect -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules src/infra/http/server.ts",
     "start": "node dist/infra/http/server.js",
     "typeorm": "tsnd ./node_modules/typeorm/cli.js"
   },
@@ -46,6 +46,7 @@
     "prettier": "^2.2.1",
     "sonic-channel": "^1.2.6",
     "ts-node-dev": "^1.1.1",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^4.1.3"
   }
 }

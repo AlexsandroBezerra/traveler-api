@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe'
 
-import City from '../infra/database/entities/City'
-import ICitiesRepository from '../repositories/ICitiesRepository'
+import City from '@infra/database/entities/City'
+import ICitiesRepository from '@repositories/ICitiesRepository'
 
 @injectable()
 class ListCitiesService {

@@ -13,16 +13,15 @@ services:
       - traveler-postgres
       - traveler-searcher
     environment:
-      - POSTGRES_HOST=traveler-postgres
+      POSTGRES_HOST: traveler-postgres
+      SONIC_HOST: traveler-searcher
+      NODE_ENV: development
     volumes:
       - .:/home/node/api
     ports:
       - "3333:3333"
     networks:
       - traveler-network
-    links:
-      - traveler-postgres
-      - traveler-searcher
 
   traveler-postgres-migrations:
     build: .
@@ -31,22 +30,19 @@ services:
     depends_on:
       - traveler-postgres
     environment:
-      - POSTGRES_HOST=traveler-postgres
+      POSTGRES_HOST: traveler-postgres
     volumes:
       - .:/home/node/api
     networks:
       - traveler-network
-    links:
-      - traveler-postgres
 
   traveler-postgres:
     image: bitnami/postgresql:latest
     container_name: traveler-postgres
     environment:
-      - POSTGRESQL_USERNAME=${POSTGRES_USER}
-      - POSTGRESQL_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRESQL_DATABASE=${POSTGRES_DB_NAME}
-    restart: always
+      POSTGRESQL_USERNAME: ${POSTGRES_USER}
+      POSTGRESQL_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRESQL_DATABASE: ${POSTGRES_DB_NAME}
     ports:
       - "5432:5432"
     networks:
@@ -54,10 +50,11 @@ services:
 
   traveler-searcher:
     image: valeriansaliou/sonic:v1.3.0
+    container_name: traveler-searcher
+    environment:
+      SECRET: ${SONIC_PASSWORD}
     volumes:
       - ./sonic/config.cfg:/etc/sonic.cfg
       - ./sonic/store/:/var/lib/sonic/store/
     networks:
       - traveler-network
-    environment:
-      - SECRET=${SONIC_PASSWORD}

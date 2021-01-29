@@ -1,10 +1,10 @@
 import { Router } from 'express'
 import { container } from 'tsyringe'
 
-import CreateCityService from '../../../services/CreateCityService'
-import ListCitiesService from '../../../services/ListCitiesService'
-import SearchCityService from '../../../services/SearchCityService'
-import ShowCityService from '../../../services/ShowCityService'
+import CreateCityService from '@services/CreateCityService'
+import ListCitiesService from '@services/ListCitiesService'
+import SearchCityService from '@services/SearchCityService'
+import ShowCityService from '@services/ShowCityService'
 
 const citiesRouter = Router()
 

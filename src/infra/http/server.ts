@@ -5,9 +5,9 @@ import 'reflect-metadata'
 import express from 'express'
 import 'express-async-errors'
 
-import errorHandler from '../../errors/handler'
+import errorHandler from '@errors/handler'
 import routes from './routes'
-import '../../container'
+import '@containers'
 
 const PORT = process.env.PORT || 3333
 const app = express()

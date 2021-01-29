@@ -2,8 +2,8 @@ import { getRepository, Repository } from 'typeorm'
 
 import City from '../entities/City'
 
-import ICreateCityDTO from '../../../dtos/ICreateCityDTO'
-import ICitiesRepository from '../../../repositories/ICitiesRepository'
+import ICreateCityDTO from '@dtos/ICreateCityDTO'
+import ICitiesRepository from '@repositories/ICitiesRepository'
 
 class CitiesRepository implements ICitiesRepository {
   ormRepository: Repository<City>

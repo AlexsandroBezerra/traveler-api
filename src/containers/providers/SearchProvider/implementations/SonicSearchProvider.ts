@@ -1,5 +1,5 @@
 import { Ingest, Search } from 'sonic-channel'
-import searcherConfig from '../../../../configs/searcher'
+import searcherConfig from '@configs/searcher'
 
 import IQueryDataDTO from '../dtos/IQueryDataDTO'
 import ISaveDataDTO from '../dtos/ISaveDataDTO'

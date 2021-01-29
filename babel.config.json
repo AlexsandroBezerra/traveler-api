@@ -5,7 +5,18 @@
     ["@babel/preset-env", { "targets": { "node": "current" } }]
   ],
   "plugins": [
-    ["module-resolver", { "alias": {} }],
+    ["module-resolver", {
+      "alias": {
+        "@configs": "./src/configs",
+        "@containers": "./src/containers",
+        "@providers": "./src/containers/providers",
+        "@dtos": "./src/dtos",
+        "@errors": "./src/errors",
+        "@infra": "./src/infra",
+        "@repositories": "./src/repositories",
+        "@services": "./src/services"
+      }
+    }],
     "babel-plugin-transform-typescript-metadata",
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     ["@babel/plugin-proposal-class-properties", { "loose": true }]

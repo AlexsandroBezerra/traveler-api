@@ -1,9 +1,10 @@
 import { inject, injectable } from 'tsyringe'
 
-import AppError from '../errors/AppError'
-import City from '../infra/database/entities/City'
-import ISearchProvider from '../container/providers/SearchProvider/models/ISearchProvider'
-import ICitiesRepository from '../repositories/ICitiesRepository'
+import City from '@infra/database/entities/City'
+
+import AppError from '@errors/AppError'
+import ISearchProvider from '@providers/SearchProvider/models/ISearchProvider'
+import ICitiesRepository from '@repositories/ICitiesRepository'
 
 interface IRequest {
   name: string
