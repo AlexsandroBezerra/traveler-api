@@ -2,6 +2,7 @@ version: '3.6'
 
 networks:
   traveler-network:
+    name: traveler-network
     driver: bridge
 
 services:
@@ -33,6 +34,7 @@ services:
       - traveler-postgres
     environment:
       POSTGRES_HOST: traveler-postgres
+      NODE_ENV: production
     networks:
       - traveler-network
 
