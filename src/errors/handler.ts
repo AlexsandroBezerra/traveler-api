@@ -6,7 +6,7 @@ const errorHandler: ErrorRequestHandler = (err, request, response, _) => {
   if (err instanceof AppError) {
     return response.status(err.statusCode).json({
       statusCode: err.statusCode,
-      code: err.code,
+      error: err.error,
       message: err.message
     })
   }

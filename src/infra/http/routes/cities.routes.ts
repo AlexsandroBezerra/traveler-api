@@ -1,3 +1,4 @@
+import { celebrate, Joi, Segments } from 'celebrate'
 import { Router } from 'express'
 import multer from 'multer'
 
@@ -10,8 +11,38 @@ const citiesController = new CitiesController()
 const upload = multer(uploadConfig.multer)
 
 citiesRouter.get('/', citiesController.index)
-citiesRouter.get('/:id', citiesController.show)
-citiesRouter.get('/search', citiesController.search)
-citiesRouter.post('/', upload.single('image'), citiesController.create)
+
+citiesRouter.get(
+  '/search',
+  celebrate({
+    [Segments.QUERY]: {
+      q: Joi.string().required()
+    }
+  }),
+  citiesController.search
+)
+
+citiesRouter.get(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required()
+    }
+  }),
+  citiesController.show
+)
+
+citiesRouter.post(
+  '/',
+  upload.single('image'),
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      description: Joi.string().required(),
+      famousFor: Joi.string().required()
+    }
+  }),
+  citiesController.create
+)
 
 export default citiesRouter

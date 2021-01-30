@@ -5,6 +5,7 @@ import ListCitiesService from '@services/ListCitiesService'
 import ShowCityService from '@services/ShowCityService'
 import CreateCityService from '@services/CreateCityService'
 import SearchCityService from '@services/SearchCityService'
+import AppError from '@errors/AppError'
 
 class CitiesController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -27,6 +28,15 @@ class CitiesController {
 
   public async create(request: Request, response: Response): Promise<Response> {
     const { name, description, famousFor } = request.body
+
+    // TMP - Image upload validation
+    if (!request.file) {
+      throw new AppError(
+        'Bad Request',
+        "'image' field is required, and it must be a image"
+      )
+    }
+
     const { filename } = request.file
 
     const createCity = container.resolve(CreateCityService)

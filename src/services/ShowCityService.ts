@@ -14,13 +14,13 @@ class ShowCityService {
 
   public async execute(id: string): Promise<City> {
     if (!isUuid(id)) {
-      throw new AppError('BAD_REQUEST', 'The id provided is invalid')
+      throw new AppError('Bad Request', 'The id provided is invalid')
     }
 
     const city = await this.citiesRepository.findById(id)
 
     if (!city) {
-      throw new AppError('NOT_FOUND', 'City not found', 404)
+      throw new AppError('Not Found', 'City not found', 404)
     }
 
     return city

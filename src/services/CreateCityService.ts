@@ -41,7 +41,7 @@ class CreateCityService {
       await this.storageProvider.deleteFile(filename)
 
       throw new AppError(
-        'CONFLICT',
+        'Conflict',
         'The city provided is already created',
         409
       )

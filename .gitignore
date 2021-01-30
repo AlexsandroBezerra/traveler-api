@@ -10,5 +10,6 @@ dist
 # Tmp files
 tmp/sonic/*
 tmp/postgres/*
+tmp/uploads/*
 
 !.gitkeep
