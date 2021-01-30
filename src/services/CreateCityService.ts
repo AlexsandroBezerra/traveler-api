@@ -5,6 +5,7 @@ import City from '@infra/database/entities/City'
 import AppError from '@errors/AppError'
 import ISearchProvider from '@providers/SearchProvider/models/ISearchProvider'
 import ICitiesRepository from '@repositories/ICitiesRepository'
+import IStorageProvider from '@providers/StorageProvider/models/IStorageProvider'
 
 interface IRequest {
   name: string
@@ -20,7 +21,10 @@ class CreateCityService {
     private citiesRepository: ICitiesRepository,
 
     @inject('SearchProvider')
-    private searchProvider: ISearchProvider
+    private searchProvider: ISearchProvider,
+
+    @inject('StorageProvider')
+    private storageProvider: IStorageProvider
   ) {}
 
   public async execute({
@@ -31,7 +35,11 @@ class CreateCityService {
   }: IRequest): Promise<City> {
     const alreadyExists = await this.citiesRepository.findByName(name)
 
+    const filename = await this.storageProvider.saveFile(image)
+
     if (alreadyExists) {
+      await this.storageProvider.deleteFile(filename)
+
       throw new AppError(
         'CONFLICT',
         'The city provided is already created',
@@ -43,7 +51,7 @@ class CreateCityService {
       name,
       description,
       famousFor,
-      image
+      image: filename
     })
 
     await this.searchProvider.save({

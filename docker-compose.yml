@@ -20,6 +20,7 @@ services:
       NODE_ENV: development
     volumes:
       - ./src:/home/node/api/src
+      - ./tmp/uploads:/home/node/api/tmp/uploads
     ports:
       - "3333:3333"
     networks:
