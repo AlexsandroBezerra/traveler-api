@@ -6,6 +6,7 @@ import ShowCityService from '@services/ShowCityService'
 import CreateCityService from '@services/CreateCityService'
 import SearchCityService from '@services/SearchCityService'
 import AppError from '@errors/AppError'
+import { classToClass } from 'class-transformer'
 
 class CitiesController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -13,7 +14,7 @@ class CitiesController {
 
     const cities = await listCities.execute()
 
-    return response.json(cities)
+    return response.json(classToClass(cities))
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
@@ -23,7 +24,7 @@ class CitiesController {
 
     const cities = await showCity.execute(id)
 
-    return response.json(cities)
+    return response.json(classToClass(cities))
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
@@ -48,7 +49,7 @@ class CitiesController {
       image: filename
     })
 
-    return response.json(city)
+    return response.json(classToClass(city))
   }
 
   public async search(request: Request, response: Response): Promise<Response> {
@@ -58,7 +59,7 @@ class CitiesController {
 
     const cities = await searchCity.execute({ query })
 
-    return response.json(cities)
+    return response.json(classToClass(cities))
   }
 }
 

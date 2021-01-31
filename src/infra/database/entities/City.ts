@@ -6,6 +6,8 @@ import {
   UpdateDateColumn
 } from 'typeorm'
 
+import { Exclude, Expose } from 'class-transformer'
+
 @Entity('cities')
 class City {
   @PrimaryGeneratedColumn('uuid')
@@ -15,7 +17,13 @@ class City {
   name: string
 
   @Column()
+  @Exclude()
   image: string
+
+  @Expose({ name: 'imageUrl' })
+  getImageUrl(): string | null {
+    return `${process.env.API_URL_PREFIX}/files/${this.image}`
+  }
 
   @Column()
   description: string
