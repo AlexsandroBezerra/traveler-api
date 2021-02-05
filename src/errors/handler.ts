@@ -15,7 +15,7 @@ const errorHandler: ErrorRequestHandler = (err, request, response, _) => {
 
   return response.status(500).json({
     statusCode: 500,
-    code: 'INTERNAL_SERVER_ERROR'
+    code: 'Internal Server Error'
   })
 }
 
