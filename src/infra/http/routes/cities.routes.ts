@@ -2,8 +2,10 @@ import { celebrate, Joi, Segments } from 'celebrate'
 import { Router } from 'express'
 import multer from 'multer'
 
-import CitiesController from '../controllers/CitiesController'
 import uploadConfig from '@configs/upload'
+import CitiesController from '../controllers/CitiesController'
+
+import ensureAuthenticated from '../middlewares/ensureAuthenticated'
 
 const citiesRouter = Router()
 const citiesController = new CitiesController()
@@ -31,6 +33,8 @@ citiesRouter.get(
   }),
   citiesController.show
 )
+
+citiesRouter.use(ensureAuthenticated)
 
 citiesRouter.post(
   '/',
