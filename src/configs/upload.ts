@@ -4,14 +4,14 @@ import path from 'path'
 
 const tmpFolder = path.resolve(__dirname, '..', '..', 'tmp')
 
-interface IUploadConfig {
+interface IUploadConfigs {
   tmpFolder: string
   uploadsFolder: string
 
   multer: multer.Options
 }
 
-const uploadConfig: IUploadConfig = {
+const uploadConfigs: IUploadConfigs = {
   tmpFolder,
   uploadsFolder: path.resolve(tmpFolder, '..', 'public', 'uploads'),
 
@@ -28,4 +28,4 @@ const uploadConfig: IUploadConfig = {
   }
 }
 
-export default uploadConfig
+export default uploadConfigs

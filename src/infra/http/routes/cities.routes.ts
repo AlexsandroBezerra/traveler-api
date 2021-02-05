@@ -2,7 +2,7 @@ import { celebrate, Joi, Segments } from 'celebrate'
 import { Router } from 'express'
 import multer from 'multer'
 
-import uploadConfig from '@configs/upload'
+import uploadConfigs from '@configs/upload'
 import CitiesController from '../controllers/CitiesController'
 
 import ensureAuthenticated from '../middlewares/ensureAuthenticated'
@@ -10,7 +10,7 @@ import ensureAuthenticated from '../middlewares/ensureAuthenticated'
 const citiesRouter = Router()
 const citiesController = new CitiesController()
 
-const upload = multer(uploadConfig.multer)
+const upload = multer(uploadConfigs.multer)
 
 citiesRouter.get('/', citiesController.index)
 

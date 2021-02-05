@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { inject, injectable } from 'tsyringe'
 
-import authConfig from '@configs/auth'
+import authConfigs from '@configs/auth'
 
 import User from '@infra/database/entities/User'
 
@@ -53,7 +53,7 @@ class AuthenticateUserService {
       )
     }
 
-    const { secret, expiresIn } = authConfig.jwt
+    const { secret, expiresIn } = authConfigs.jwt
 
     const token = jwt.sign({}, secret, { subject: user.id, expiresIn })
 
