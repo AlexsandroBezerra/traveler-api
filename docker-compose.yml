@@ -17,7 +17,6 @@ services:
     environment:
       POSTGRES_HOST: traveler-postgres
       SONIC_HOST: traveler-searcher
-      NODE_ENV: development
     volumes:
       - ./src:/home/node/api/src
       - ./tmp/uploads:/home/node/api/tmp/uploads
@@ -35,7 +34,7 @@ services:
       - traveler-postgres
     environment:
       POSTGRES_HOST: traveler-postgres
-      NODE_ENV: production
+      SONIC_HOST: traveler-searcher
     networks:
       - traveler-network
 
@@ -46,8 +45,6 @@ services:
       POSTGRESQL_USERNAME: ${POSTGRES_USER}
       POSTGRESQL_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRESQL_DATABASE: ${POSTGRES_DB_NAME}
-    volumes:
-      - ./tmp/postgres:/bitnami/postgresql
     ports:
       - "5432:5432"
     networks:
@@ -60,6 +57,5 @@ services:
       SECRET: ${SONIC_PASSWORD}
     volumes:
       - ./sonic-config.cfg:/etc/sonic.cfg
-      - ./tmp/sonic/store:/var/lib/sonic/store/
     networks:
       - traveler-network

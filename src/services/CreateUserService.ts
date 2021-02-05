@@ -4,6 +4,7 @@ import User from '@infra/database/entities/User'
 
 import AppError from '@errors/AppError'
 import IUsersRepository from '@repositories/IUsersRepository'
+import IHashProvider from '@providers/HashProvider/models/IHashProvider'
 
 interface IRequest {
   email: string
@@ -14,7 +15,10 @@ interface IRequest {
 class CreateUserService {
   constructor(
     @inject('UsersRepository')
-    private usersRepository: IUsersRepository
+    private usersRepository: IUsersRepository,
+
+    @inject('HashProvider')
+    private hashProvider: IHashProvider
   ) {}
 
   public async execute({ email, password }: IRequest): Promise<User> {
@@ -28,7 +32,12 @@ class CreateUserService {
       )
     }
 
-    const user = await this.usersRepository.create({ email, password })
+    const hashedPassword = await this.hashProvider.generateHash(password)
+
+    const user = await this.usersRepository.create({
+      email,
+      password: hashedPassword
+    })
 
     return user
   }

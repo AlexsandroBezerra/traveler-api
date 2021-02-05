@@ -1,5 +1,8 @@
 import { container } from 'tsyringe'
 
+import BCryptHashProvider from './HashProvider/implementations/BcryptHashProvider'
+import IHashProvider from './HashProvider/models/IHashProvider'
+
 import SonicSearchProvider from './SearchProvider/implementations/SonicSearchProvider'
 import ISearchProvider from './SearchProvider/models/ISearchProvider'
 
@@ -15,3 +18,5 @@ container.registerSingleton<IStorageProvider>(
   'StorageProvider',
   DiskStorageProvider
 )
+
+container.registerSingleton<IHashProvider>('HashProvider', BCryptHashProvider)
