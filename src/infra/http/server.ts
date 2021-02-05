@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 3333
 const app = express()
 
 app.use(cors())
-app.use('/files', express.static(uploadConfig.uploadFolder))
+app.use('/static', express.static(uploadConfig.uploadsFolder))
 
 app.use(express.json())
 app.use(routes)

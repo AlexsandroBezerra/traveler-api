@@ -9,7 +9,7 @@ export default class DiskStorageProvider implements IStorageProvider {
   public async saveFile(file: string): Promise<string> {
     await fs.promises.copyFile(
       path.resolve(uploadConfig.tmpFolder, file),
-      path.resolve(uploadConfig.uploadFolder, file)
+      path.resolve(uploadConfig.uploadsFolder, file)
     )
 
     await fs.promises.unlink(path.resolve(uploadConfig.tmpFolder, file))
@@ -18,7 +18,7 @@ export default class DiskStorageProvider implements IStorageProvider {
   }
 
   public async deleteFile(file: string): Promise<void> {
-    const filePath = path.resolve(uploadConfig.uploadFolder, file)
+    const filePath = path.resolve(uploadConfig.uploadsFolder, file)
 
     try {
       await fs.promises.unlink(filePath)

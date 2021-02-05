@@ -7,9 +7,12 @@ dist
 # Enviroment variables
 .env
 
-# Tmp files
+# Tmp files - Persistence
 tmp/sonic/*
 tmp/postgres/*
-tmp/uploads/*
 
+# Uploads folder
+public/uploads/*
+
+# Keep empty folders
 !.gitkeep

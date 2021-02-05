@@ -22,7 +22,7 @@ class City {
 
   @Expose({ name: 'imageUrl' })
   getImageUrl(): string | null {
-    return `${process.env.API_URL_PREFIX}/files/${this.image}`
+    return `${process.env.API_URL_PREFIX}/static/${this.image}`
   }
 
   @Column()
