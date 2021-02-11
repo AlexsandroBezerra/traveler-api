@@ -21,9 +21,9 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.SSH_PORT }}
-        source: ".,!public/uploads"
+        source: ".,!tmp"
         target: "~/app/traveler-api"
-        
+
     - name: Running production script
       uses: appleboy/ssh-action@master
       with:
