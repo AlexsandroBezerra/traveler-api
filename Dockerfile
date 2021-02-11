@@ -6,12 +6,12 @@ WORKDIR /home/node/api
 
 USER node
 
-COPY --chown=node:node package.json yarn.* ./
+COPY --chown=node:node package*.json ./
 
-RUN yarn
+RUN npm install
 
 COPY --chown=node:node . .
-RUN yarn build
+RUN npm run build
 
 EXPOSE 3333
 

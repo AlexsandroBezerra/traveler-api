@@ -10,7 +10,7 @@ services:
     build: .
     image: traveler-api
     container_name: traveler-api
-    command: yarn dev
+    command: npm run dev
     depends_on:
       - traveler-postgres
       - traveler-searcher
@@ -29,7 +29,7 @@ services:
     build: .
     image: traveler-api
     container_name: traveler-postgres-migrations
-    command: yarn typeorm migration:run
+    command: npm run typeorm migration:run
     depends_on:
       - traveler-postgres
     environment:
