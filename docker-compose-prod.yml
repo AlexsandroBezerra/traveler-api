@@ -18,8 +18,6 @@ services:
       POSTGRES_HOST: traveler-postgres
       SONIC_HOST: traveler-searcher
       NODE_ENV: production
-    volumes:
-      - ./public/uploads:/home/node/api/public/uploads
     ports:
       - "3333:3333"
     networks:

@@ -7,6 +7,7 @@ import {
 } from 'typeorm'
 
 import { Exclude, Expose } from 'class-transformer'
+import uploadConfigs from '@configs/upload'
 
 @Entity('cities')
 class City {
@@ -22,7 +23,7 @@ class City {
 
   @Expose({ name: 'imageUrl' })
   getImageUrl(): string | null {
-    return `${process.env.API_URL_PREFIX}/static/${this.image}`
+    return `${uploadConfigs.urlUploadPrefix}/${this.image}`
   }
 
   @Column()

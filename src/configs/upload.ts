@@ -9,6 +9,7 @@ interface IUploadConfigs {
   uploadsFolder: string
 
   driver: 's3' | 'disk'
+  urlUploadPrefix: string
 
   multer: multer.Options
 
@@ -17,11 +18,20 @@ interface IUploadConfigs {
   }
 }
 
+const bucketName = 'alex-traveler'
+const driver = process.env.NODE_ENV === 'production' ? 's3' : 'disk'
+
+const urlPrefixes = {
+  s3: `https://${bucketName}.s3.amazonaws.com`,
+  disk: `${process.env.API_URL_PREFIX}/static`
+}
+
 const uploadConfigs: IUploadConfigs = {
   tmpFolder,
   uploadsFolder: path.resolve(tmpFolder, '..', 'public', 'uploads'),
 
-  driver: process.env.NODE_ENV === 'production' ? 's3' : 'disk',
+  driver,
+  urlUploadPrefix: urlPrefixes[driver],
 
   multer: {
     storage: multer.diskStorage({
@@ -36,7 +46,7 @@ const uploadConfigs: IUploadConfigs = {
   },
 
   aws: {
-    bucket: 'alex-traveler'
+    bucket: bucketName
   }
 }
 
