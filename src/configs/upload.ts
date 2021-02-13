@@ -8,12 +8,20 @@ interface IUploadConfigs {
   tmpFolder: string
   uploadsFolder: string
 
+  driver: 's3' | 'disk'
+
   multer: multer.Options
+
+  aws: {
+    bucket: string
+  }
 }
 
 const uploadConfigs: IUploadConfigs = {
   tmpFolder,
   uploadsFolder: path.resolve(tmpFolder, '..', 'public', 'uploads'),
+
+  driver: process.env.NODE_ENV === 'production' ? 's3' : 'disk',
 
   multer: {
     storage: multer.diskStorage({
@@ -25,6 +33,10 @@ const uploadConfigs: IUploadConfigs = {
         return callback(null, fileName)
       }
     })
+  },
+
+  aws: {
+    bucket: 'alex-traveler'
   }
 }
 
