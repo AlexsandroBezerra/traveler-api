@@ -34,6 +34,16 @@ citiesRouter.get(
   citiesController.show
 )
 
+citiesRouter.post(
+  '/:id/access',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required()
+    }
+  }),
+  citiesController.access
+)
+
 citiesRouter.use(ensureAuthenticated)
 
 citiesRouter.post(
