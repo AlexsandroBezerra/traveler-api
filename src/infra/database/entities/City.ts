@@ -35,6 +35,9 @@ class City {
   @Column({ name: 'accesses_counter' })
   accessesCounter: number
 
+  @Column({ name: 'img_lazy_load_hash' })
+  imageHash: string
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: string
 
