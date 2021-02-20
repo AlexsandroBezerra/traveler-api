@@ -25,20 +25,20 @@ citiesRouter.get(
 )
 
 citiesRouter.get(
-  '/:id',
+  '/:slug',
   celebrate({
     [Segments.PARAMS]: {
-      id: Joi.string().uuid().required()
+      slug: Joi.string().required()
     }
   }),
   citiesController.show
 )
 
 citiesRouter.post(
-  '/:id/access',
+  '/:slug/access',
   celebrate({
     [Segments.PARAMS]: {
-      id: Joi.string().uuid().required()
+      slug: Joi.string().required()
     }
   }),
   citiesController.access
@@ -48,7 +48,6 @@ citiesRouter.use(ensureAuthenticated)
 
 citiesRouter.post(
   '/',
-  upload.single('image'),
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
@@ -56,9 +55,19 @@ citiesRouter.post(
       famousFor: Joi.string().required()
     }
   }),
+  upload.single('image'),
   citiesController.create
 )
 
-citiesRouter.patch('/:id/image', upload.single('image'), citiesController.image)
+citiesRouter.patch(
+  '/:slug/image',
+  celebrate({
+    [Segments.PARAMS]: {
+      slug: Joi.string().required()
+    }
+  }),
+  upload.single('image'),
+  citiesController.image
+)
 
 export default citiesRouter

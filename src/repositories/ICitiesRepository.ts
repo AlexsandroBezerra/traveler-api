@@ -7,6 +7,7 @@ interface ICitiesRepository {
   all(): Promise<City[]>
   findByName(name: string): Promise<City | undefined>
   findById(id: string): Promise<City | undefined>
+  findBySlug(slug: string): Promise<City | undefined>
   findByIds(ids: string[]): Promise<City[]>
   create(cityData: ICreateCityDTO): Promise<City>
   update(city: IUpdateCityDTO): Promise<City>

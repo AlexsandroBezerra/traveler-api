@@ -5,7 +5,7 @@ import City from '@infra/database/entities/City'
 import ICitiesRepository from '@repositories/ICitiesRepository'
 
 interface IRequest {
-  id: string
+  slug: string
 }
 
 @injectable()
@@ -15,8 +15,8 @@ class AddAccessToCityService {
     private citiesRepository: ICitiesRepository
   ) {}
 
-  public async execute({ id }: IRequest): Promise<City> {
-    const city = await this.citiesRepository.findById(id)
+  public async execute({ slug }: IRequest): Promise<City> {
+    const city = await this.citiesRepository.findBySlug(slug)
 
     if (!city) {
       throw new AppError('Not Found', 'City not found', 404)

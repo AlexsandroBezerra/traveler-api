@@ -1,9 +1,12 @@
 import { inject, injectable } from 'tsyringe'
-import { validate as isUuid } from 'uuid'
 
 import AppError from '@errors/AppError'
 import City from '@infra/database/entities/City'
 import ICitiesRepository from '@repositories/ICitiesRepository'
+
+interface IRequest {
+  slug: string
+}
 
 @injectable()
 class ShowCityService {
@@ -12,12 +15,8 @@ class ShowCityService {
     private citiesRepository: ICitiesRepository
   ) {}
 
-  public async execute(id: string): Promise<City> {
-    if (!isUuid(id)) {
-      throw new AppError('Bad Request', 'The id provided is invalid')
-    }
-
-    const city = await this.citiesRepository.findById(id)
+  public async execute({ slug }: IRequest): Promise<City> {
+    const city = await this.citiesRepository.findBySlug(slug)
 
     if (!city) {
       throw new AppError('Not Found', 'City not found', 404)

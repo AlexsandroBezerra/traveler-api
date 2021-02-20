@@ -31,6 +31,14 @@ class CitiesRepository implements ICitiesRepository {
     return city
   }
 
+  public async findBySlug(slug: string): Promise<City | undefined> {
+    const city = await this.ormRepository.findOne({
+      where: { slug }
+    })
+
+    return city
+  }
+
   public async findByName(name: string): Promise<City | undefined> {
     const city = await this.ormRepository.findOne({
       where: { name }

@@ -8,7 +8,7 @@ import City from '@infra/database/entities/City'
 import ILazyLoadProvider from '@providers/LazyLoadProvider/models/ILazyLoadProvider'
 
 interface IRequest {
-  cityId: string
+  citySlug: string
   imageFilename: string
 }
 
@@ -25,8 +25,8 @@ class UpdateCityImageService {
     private lazyLoadProvider: ILazyLoadProvider
   ) {}
 
-  public async execute({ cityId, imageFilename }: IRequest): Promise<City> {
-    const city = await this.citiesRepository.findById(cityId)
+  public async execute({ citySlug, imageFilename }: IRequest): Promise<City> {
+    const city = await this.citiesRepository.findBySlug(citySlug)
 
     if (!city) {
       throw new AppError('Not Found', 'City provided was not found', 404)

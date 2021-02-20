@@ -21,11 +21,11 @@ class CitiesController {
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
-    const { id } = request.params
+    const { slug } = request.params
 
     const showCity = container.resolve(ShowCityService)
 
-    const cities = await showCity.execute(id)
+    const cities = await showCity.execute({ slug })
 
     return response.json(classToClass(cities))
   }
@@ -66,17 +66,17 @@ class CitiesController {
   }
 
   public async access(request: Request, response: Response): Promise<Response> {
-    const { id } = request.params
+    const { slug } = request.params
 
     const addAccessToCity = container.resolve(AddAccessToCityService)
 
-    const city = await addAccessToCity.execute({ id })
+    const city = await addAccessToCity.execute({ slug })
 
     return response.json(classToClass(city))
   }
 
   public async image(request: Request, response: Response): Promise<Response> {
-    const { id } = request.params
+    const { slug } = request.params
 
     // TMP - Image upload validation
     if (!request.file) {
@@ -91,7 +91,7 @@ class CitiesController {
     const updateCityImage = container.resolve(UpdateCityImageService)
 
     const city = await updateCityImage.execute({
-      cityId: id,
+      citySlug: slug,
       imageFilename: filename
     })
 
