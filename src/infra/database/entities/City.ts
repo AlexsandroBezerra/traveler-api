@@ -29,6 +29,9 @@ class City {
   @Column()
   description: string
 
+  @Column()
+  slug: string
+
   @Column({ name: 'famous_for' })
   famousFor: string
 
