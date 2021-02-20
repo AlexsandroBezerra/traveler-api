@@ -59,4 +59,6 @@ citiesRouter.post(
   citiesController.create
 )
 
+citiesRouter.patch('/:id/image', upload.single('image'), citiesController.image)
+
 export default citiesRouter
