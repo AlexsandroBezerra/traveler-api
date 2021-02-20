@@ -4,6 +4,7 @@ import City from '../entities/City'
 
 import ICreateCityDTO from '@dtos/ICreateCityDTO'
 import ICitiesRepository from '@repositories/ICitiesRepository'
+import IUpdateCityDTO from '@dtos/IUpdateCityDTO'
 
 class CitiesRepository implements ICitiesRepository {
   ormRepository: Repository<City>
@@ -16,14 +17,6 @@ class CitiesRepository implements ICitiesRepository {
     const cities = await this.ormRepository.find()
 
     return cities
-  }
-
-  public async create(cityData: ICreateCityDTO): Promise<City> {
-    const city = this.ormRepository.create(cityData)
-
-    await this.ormRepository.save(city)
-
-    return city
   }
 
   public async findByIds(ids: string[]): Promise<City[]> {
@@ -44,6 +37,20 @@ class CitiesRepository implements ICitiesRepository {
     })
 
     return city
+  }
+
+  public async create(cityData: ICreateCityDTO): Promise<City> {
+    const city = this.ormRepository.create(cityData)
+
+    await this.ormRepository.save(city)
+
+    return city
+  }
+
+  public async update(city: IUpdateCityDTO): Promise<City> {
+    const updatedCity = await this.ormRepository.save(city)
+
+    return updatedCity
   }
 }
 

@@ -6,6 +6,7 @@ import AppError from '@errors/AppError'
 import ISearchProvider from '@providers/SearchProvider/models/ISearchProvider'
 import ICitiesRepository from '@repositories/ICitiesRepository'
 import IStorageProvider from '@providers/StorageProvider/models/IStorageProvider'
+import ILazyLoadProvider from '@providers/LazyLoadProvider/models/ILazyLoadProvider'
 
 interface IRequest {
   name: string
@@ -24,7 +25,10 @@ class CreateCityService {
     private searchProvider: ISearchProvider,
 
     @inject('StorageProvider')
-    private storageProvider: IStorageProvider
+    private storageProvider: IStorageProvider,
+
+    @inject('LazyLoadProvider')
+    private lazyLoadProvider: ILazyLoadProvider
   ) {}
 
   public async execute({
@@ -35,11 +39,7 @@ class CreateCityService {
   }: IRequest): Promise<City> {
     const alreadyExists = await this.citiesRepository.findByName(name)
 
-    const filename = await this.storageProvider.saveFile(image)
-
     if (alreadyExists) {
-      await this.storageProvider.deleteFile(filename)
-
       throw new AppError(
         'Conflict',
         'The city provided is already created',
@@ -47,11 +47,16 @@ class CreateCityService {
       )
     }
 
+    const imageHash = await this.lazyLoadProvider.encode(image)
+
+    const filename = await this.storageProvider.saveFile(image)
+
     const city = await this.citiesRepository.create({
       name,
       description,
       famousFor,
-      image: filename
+      image: filename,
+      imageHash
     })
 
     await this.searchProvider.save({

@@ -34,6 +34,16 @@ citiesRouter.get(
   citiesController.show
 )
 
+citiesRouter.post(
+  '/:id/access',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required()
+    }
+  }),
+  citiesController.access
+)
+
 citiesRouter.use(ensureAuthenticated)
 
 citiesRouter.post(
@@ -48,5 +58,7 @@ citiesRouter.post(
   }),
   citiesController.create
 )
+
+citiesRouter.patch('/:id/image', upload.single('image'), citiesController.image)
 
 export default citiesRouter

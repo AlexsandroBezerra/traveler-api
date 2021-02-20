@@ -3,6 +3,7 @@ interface ICreateCityDTO {
   description: string
   famousFor: string
   image: string
+  imageHash: string
 }
 
 export default ICreateCityDTO

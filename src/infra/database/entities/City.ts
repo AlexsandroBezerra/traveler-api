@@ -5,8 +5,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm'
-
 import { Exclude, Expose } from 'class-transformer'
+
 import uploadConfigs from '@configs/upload'
 
 @Entity('cities')
@@ -31,6 +31,12 @@ class City {
 
   @Column({ name: 'famous_for' })
   famousFor: string
+
+  @Column({ name: 'accesses_counter' })
+  accessesCounter: number
+
+  @Column({ name: 'img_lazy_load_hash' })
+  imageHash: string
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: string
