@@ -4,6 +4,7 @@ interface ICreateCityDTO {
   famousFor: string
   image: string
   imageHash: string
+  slug: string
 }
 
 export default ICreateCityDTO

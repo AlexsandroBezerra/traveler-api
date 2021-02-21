@@ -48,6 +48,7 @@ citiesRouter.use(ensureAuthenticated)
 
 citiesRouter.post(
   '/',
+  upload.single('image'),
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
@@ -55,18 +56,17 @@ citiesRouter.post(
       famousFor: Joi.string().required()
     }
   }),
-  upload.single('image'),
   citiesController.create
 )
 
 citiesRouter.patch(
   '/:slug/image',
+  upload.single('image'),
   celebrate({
     [Segments.PARAMS]: {
       slug: Joi.string().required()
     }
   }),
-  upload.single('image'),
   citiesController.image
 )
 

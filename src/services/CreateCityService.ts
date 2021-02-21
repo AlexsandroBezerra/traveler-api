@@ -7,6 +7,7 @@ import ISearchProvider from '@providers/SearchProvider/models/ISearchProvider'
 import ICitiesRepository from '@repositories/ICitiesRepository'
 import IStorageProvider from '@providers/StorageProvider/models/IStorageProvider'
 import ILazyLoadProvider from '@providers/LazyLoadProvider/models/ILazyLoadProvider'
+import slugify from 'slugify'
 
 interface IRequest {
   name: string
@@ -51,12 +52,15 @@ class CreateCityService {
 
     const filename = await this.storageProvider.saveFile(image)
 
+    const slug = slugify(name)
+
     const city = await this.citiesRepository.create({
       name,
       description,
       famousFor,
       image: filename,
-      imageHash
+      imageHash,
+      slug
     })
 
     await this.searchProvider.save({
