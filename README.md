@@ -33,7 +33,9 @@
 
 ## 💁 About the project
 
-Soon.
+This api provides everything needed to Traveler Web App.
+
+You can list and search for a Ceara cities.
 
 ### 🔗 Useful link
 
