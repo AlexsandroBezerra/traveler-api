@@ -2,9 +2,12 @@ import bcrypt from "bcryptjs";
 import { Router } from "express";
 import { getRepository } from "typeorm";
 import jwt from "jsonwebtoken";
+import { v4 as uuid } from "uuid";
 
 import { User } from "../models/User";
 import { authConfigs } from "../configs/auth";
+import { UserToken } from "../models/UserToken";
+import { addUserInformationToRequest } from "../middlewares/addUserToRequest";
 
 export const sessionsRouter = Router();
 
@@ -18,6 +21,7 @@ sessionsRouter.post("/", async (request, response) => {
   const { email, password } = request.body;
 
   const usersRepository = getRepository(User);
+  const userTokensRepository = getRepository(UserToken);
 
   const user = await usersRepository.findOne({ email });
 
@@ -36,5 +40,16 @@ sessionsRouter.post("/", async (request, response) => {
     expiresIn: authConfigs.jwt.expiresIn,
   });
 
-  return response.json({ token });
+  const refreshToken = userTokensRepository.create({
+    token: uuid(),
+    user_id: user.id
+  });
+
+  await userTokensRepository.save(refreshToken);
+
+  return response.json({
+    token,
+    refreshToken: refreshToken.token,
+  });
 });
+
