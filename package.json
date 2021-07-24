@@ -1,0 +1,11 @@
+{
+  "name": "traveler-api",
+  "version": "1.0.0",
+  "description": "Rest api for Traveler application",
+  "main": "index.js",
+  "repository": "https://github.com/AlexsandroBezerra/traveler-api",
+  "author": "Alexsandro G Bezerra",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {}
+}
