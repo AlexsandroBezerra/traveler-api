@@ -6,3 +6,6 @@ dist
 
 # Database
 database.sqlite
+
+# Enviroment
+.env
