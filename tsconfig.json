@@ -6,7 +6,7 @@
     "rootDir": "./src",
     "removeComments": true,
     "strict": true,
-    "strictPropertyInitialization": true,
+    "strictPropertyInitialization": false,
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
