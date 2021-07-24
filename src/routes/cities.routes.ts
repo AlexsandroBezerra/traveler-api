@@ -1,61 +1,14 @@
 import { Router } from "express";
-import { getRepository } from "typeorm";
+import { citiesController } from "../controllers/CitiesController";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
-
-import { City } from "../models/City";
 
 export const citiesRouter = Router();
 
-citiesRouter.get("/", async (request, response) => {
-  const citiesRepository = getRepository(City);
-
-  const cities = await citiesRepository.find();
-
-  return response.json(cities);
-});
+citiesRouter.get("/", citiesController.index);
+citiesRouter.get("/:id", citiesController.show);
 
 citiesRouter.use(ensureAuthenticated);
 
-citiesRouter.post("/", async (request, response) => {
-  const { name, description, photo } = request.body;
-
-  const citiesRepository = getRepository(City);
-
-  const city = citiesRepository.create({
-    name,
-    description,
-    photo,
-    slug: name.replace(/ /g, "-").toLowerCase(),
-  });
-
-  await citiesRepository.save(city);
-
-  return response.status(201).json(city);
-});
-
-citiesRouter.put("/:id", async (request, response) => {
-  const { name, description, photo } = request.body;
-  const { id } = request.params;
-
-  const citiesRepository = getRepository(City);
-
-  const city = await citiesRepository.save({
-    id: Number(id),
-    name,
-    description,
-    photo,
-    slug: name.replace(/ /g, "-").toLowerCase(),
-  })
-
-  return response.json(city);
-});
-
-citiesRouter.delete("/:id", async (request, response) => {
-  const { id } = request.params;
-
-  const citiesRepository = getRepository(City);
-
-  await citiesRepository.delete(id);
-
-  return response.status(204).send();
-});
+citiesRouter.post("/", citiesController.create);
+citiesRouter.put("/:id", citiesController.update);
+citiesRouter.delete("/:id", citiesController.delete);
