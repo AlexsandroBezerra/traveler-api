@@ -1,11 +1,19 @@
 {
   "name": "traveler-api",
   "version": "1.0.0",
-  "description": "Rest api for Traveler application",
+  "description": "Rest api for Traveler application.",
   "main": "index.js",
   "repository": "https://github.com/AlexsandroBezerra/traveler-api",
   "author": "Alexsandro G Bezerra",
   "license": "MIT",
   "private": true,
-  "dependencies": {}
+  "scripts": {
+    "start": "node dist/server.js",
+    "dev": "ts-node-dev --transpile-only src/server.ts",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^4.3.5",
+    "ts-node-dev": "^1.1.8"
+  }
 }
