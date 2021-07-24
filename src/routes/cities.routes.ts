@@ -32,3 +32,21 @@ citiesRouter.post("/", async (request, response) => {
 
   return response.status(201).json(city);
 });
+
+citiesRouter.put("/:id", async (request, response) => {
+  const { name, description, photo } = request.body;
+  const { id } = request.params;
+
+  const citiesRepository = getRepository(City);
+
+  const city = await citiesRepository.save({
+    id: Number(id),
+    name,
+    description,
+    photo,
+    slug: name.replace(/ /g, "-").toLowerCase(),
+  })
+
+  return response.json(city);
+});
+
