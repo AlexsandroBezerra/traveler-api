@@ -50,3 +50,12 @@ citiesRouter.put("/:id", async (request, response) => {
   return response.json(city);
 });
 
+citiesRouter.delete("/:id", async (request, response) => {
+  const { id } = request.params;
+
+  const citiesRepository = getRepository(City);
+
+  await citiesRepository.delete(id);
+
+  return response.status(204).send();
+});
