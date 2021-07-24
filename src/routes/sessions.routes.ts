@@ -12,7 +12,7 @@ const invalidCredentialsResponse = {
   error: true,
   code: "invalid.credentials",
   message: "Invalid email/password combination",
-}
+};
 
 sessionsRouter.post("/", async (request, response) => {
   const { email, password } = request.body;

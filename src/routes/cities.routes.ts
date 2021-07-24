@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { getRepository } from "typeorm";
+import ensureAuthenticated from "../middlewares/ensureAuthenticated";
 
 import { City } from "../models/City";
 
@@ -12,6 +13,8 @@ citiesRouter.get("/", async (request, response) => {
 
   return response.json(cities);
 });
+
+citiesRouter.use(ensureAuthenticated);
 
 citiesRouter.post("/", async (request, response) => {
   const { name, description, photo } = request.body;
