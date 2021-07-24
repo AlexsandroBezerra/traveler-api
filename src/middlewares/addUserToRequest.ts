@@ -1,15 +1,14 @@
-import { NextFunction, Request, Response } from "express";
-import { verify } from "jsonwebtoken";
+import { Request, Response, NextFunction } from "express";
+import jwt from "jsonwebtoken";
 
-import { authConfigs } from "../configs/auth";
+interface TokenPayLoad {
+  iat: number;
+  exp: number;
+  sub: string;
+  role: string;
+}
 
-interface ITokenPayload {
-  iat: number
-  exp: number
-  sub: string
-};
-
-export function ensureAuthenticated(
+export function addUserInformationToRequest(
   request: Request,
   response: Response,
   next: NextFunction,
@@ -35,15 +34,13 @@ export function ensureAuthenticated(
   }
 
   try {
-    const decoded = verify(token, authConfigs.jwt.secret);
-
-    const { sub } = decoded as ITokenPayload;
-    const id = Number(sub);
+    const decoded = jwt.decode(token as string) as TokenPayLoad;
+    const id = Number(decoded.sub);
 
     request.user = { id };
 
     return next();
-  } catch {
+  } catch (err) {
     return response.status(401).json({
       error: true,
       code: "token.invalid",

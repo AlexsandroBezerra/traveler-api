@@ -53,3 +53,42 @@ sessionsRouter.post("/", async (request, response) => {
   });
 });
 
+sessionsRouter.post(
+  "/refresh",
+  addUserInformationToRequest,
+  async (request, response) => {
+    const { refreshToken } = request.body;
+    const { id } = request.user;
+
+    const userTokensRepository = getRepository(UserToken);
+
+    const userToken = await userTokensRepository.findOne({
+      token: refreshToken,
+      user_id: id,
+    });
+
+    if (!userToken) {
+      return response.status(401).json({
+        error: true,
+        code: "invalid.token",
+        message: "Invalid refreshToken",
+      });
+    }
+
+    const newRefreshToken = uuid();
+
+    userToken.token = newRefreshToken;
+
+    await userTokensRepository.save(userToken);
+
+    const token = jwt.sign({}, authConfigs.jwt.secret, {
+      subject: id.toString(),
+      expiresIn: authConfigs.jwt.expiresIn,
+    });
+
+    return response.json({
+      token,
+      refreshToken: newRefreshToken,
+    });
+  }
+);
