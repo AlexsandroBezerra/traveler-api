@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 import { Router } from "express";
 import { getRepository } from "typeorm";
 
@@ -10,7 +11,12 @@ usersRouter.post("/", async (request, response) => {
 
   const usersRepository = getRepository(User);
 
-  const user = usersRepository.create({ email, password });
+  const hashedPassword = await bcrypt.hash(password, 8);
+
+  const user = usersRepository.create({
+    email,
+    password: hashedPassword,
+  });
 
   await usersRepository.save(user);
 
