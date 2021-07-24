@@ -27,5 +27,5 @@ citiesRouter.post("/", async (request, response) => {
 
   await citiesRepository.save(city);
 
-  return response.json(city);
+  return response.status(201).json(city);
 });
